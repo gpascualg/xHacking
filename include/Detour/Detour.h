@@ -94,7 +94,7 @@ public:
 		Loader::Data* data =  Loader::Load(module, function);
 		if (data)
 		{
-			_detourer->_src = .Function;
+			_detourer->_src = data->Function;
 			_state = DETOUR_READY;
 			Commit();
 			delete data;
