@@ -8,6 +8,8 @@ A brief schematic of the library is:
 
 Utilities
 ---------
+Some useful functions to be used on target processes
+
 > +CreateConsole
 
 > +GetModuleInfo
@@ -22,6 +24,8 @@ Utilities
 
 Loader
 ------
+Easily loads or waits for a DLL to be loaded. Asynchronous callbacks fire up when the DLL is available.
+
 > +Wait
 
 > +Load
@@ -30,6 +34,8 @@ Loader
 
 Detour
 ------
+Allows to create detours, codecaves and memory exceptions (PAGE_GUARD breakpoints/codecaves) in the target memory.
+
 > +Wait (Depends on *Loader*)
 
 > +Load (Depends on *Loader*)
@@ -52,6 +58,8 @@ Detour
 
 API
 ---
+Allows to indirectly call APIs. Can also fake calls return addresses.
+
 > +operator()(Args...)
 
 > +Fake
