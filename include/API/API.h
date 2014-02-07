@@ -36,8 +36,6 @@ enum API_LOADER_MODE
 	API_LOADER_LOAD,
 };
 
-class API_i;
-
 template<typename ReturnType, typename... Args>
 class API
 {
@@ -94,12 +92,17 @@ public:
 				return 0;
 			}
 
+			// Convert the args... to a tuple, so they can be individually accessed
 			std::tuple<Args...> targs = std::forward_as_tuple(args...);
+
+			// For some reason, using the attributes directly, would push it's offset (ie, 8)
+			// instead of its value, even if indirection was used.
 			DWORD fake = _fake;
 			DWORD api = _jmp;
 			DWORD retval = 0;
 			DWORD to = (DWORD)jmp;
 
+			// foreach args...: push args[i]
 			for (int i = 0; i < nargs; i++)
 			{
 				// PUSH [argument<i>]
@@ -137,6 +140,22 @@ public:
 
 		return ((raw_type)(_api))(args...);
 	}
+
+	/**
+	If we were to see the stack of the above function, it would be like:
+		
+		CALL_RETURN	<---------------
+		arg[0]						|
+		arg[1]						|
+		...			----------------
+		arg[i]		|
+		FAKE_RETURN	<---------------
+									|
+		(JMP API)					|
+			| ...					|
+			| RET ------------------
+	
+	**/
 
 	/// <summary>
 	/// Setups the fake return address

@@ -58,12 +58,13 @@ BYTE* Detour_i::CreateTrampoline()
 	// PUSH EBP
 	// MOV EBP, ESP
 	// PUSH EAX
+	// FIXME: Is it really worth saving EAX?
 	*(BYTE*)(trampoline + 0) = 0x55;
 	*(WORD*)(trampoline + 1) = 0xEC8B;
 	*(BYTE*)(trampoline + 3) = 0x50;
 	trampoline += 4;
 
-	BYTE offset = _arguments * 4 + 4; // +4 due push + mov above
+	BYTE offset = _arguments * 4 + 4; // +3 (mov eax, []) + 1 (push eax) = +4
 	for (BYTE i = 0; i < _arguments; i++)
 	{
 		// MOV EAX, [EBP + (numarguments - i)*4]
@@ -162,19 +163,16 @@ bool Detour_i::Commit()
 	DWORD old;
 	VirtualProtect(_src, _detourlen, PAGE_READWRITE, &old);
 
+	memset(_src, 0x90, _detourlen);
+	
+	BYTE* dst = _dst;
 	if (_withTrampoline)
-	{
-		memset(_src, 0x90, _detourlen);
-		FillByType(_src, hook);
-	}
-	else
-	{
-		memset(_src, 0x90, _detourlen);
-		FillByType(_src, _dst);
-	}
+		dst = hook;
 
+	FillByType(_src, dst);
+
+	// Allows calling in non trampoline environments, and code restoring
 	_callee = hook;
-
 	VirtualProtect(_src, _detourlen, old, &old);
 
 	return true;
@@ -232,6 +230,10 @@ LONG WINAPI EHandler(EXCEPTION_POINTERS* ExceptionInfo)
 
 			if ((DWORD)ExceptionInfo->ExceptionRecord->ExceptionAddress == (DWORD)detour->getSource())
 			{
+				// We are going to force a call to our "detour" function
+				// That is, saving EBP (avoid messing up), pushing parameters, and calling
+
+				// Inline asm requieres DWORDS for calls/movs 
 				DWORD offs = detour->getArguments() * 4 + 4;
 				DWORD dest = (DWORD)detour->getDest();
 				DWORD oEBP = 0;
@@ -263,6 +265,8 @@ LONG WINAPI EHandler(EXCEPTION_POINTERS* ExceptionInfo)
 	}
 	else if (ExceptionInfo->ExceptionRecord->ExceptionCode == EXCEPTION_SINGLE_STEP)
 	{
+		// TODO: We should avoid iterating all over the handlers, and use some kind of callback-structure to determine which address is to be protected
+		// TODO: VirtualQuery should not be done everytime, it should be saved in a structure (alonside with above) on detour/breakpoint creation
 		std::vector<Detour_i*>::iterator it = EHandlers.begin();
 		for (; it != EHandlers.end(); it++)
 		{

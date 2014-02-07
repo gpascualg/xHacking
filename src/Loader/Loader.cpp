@@ -12,6 +12,7 @@ Loader::Loader() :
 
 void Loader::wait_i(char* module, char* function, std::function<void(Loader::Data*)> cb)
 {
+	// Can we immediatelly return?
 	HMODULE handle = GetModuleHandle(module);
 	if (handle)
 	{
@@ -21,6 +22,7 @@ void Loader::wait_i(char* module, char* function, std::function<void(Loader::Dat
 		return;
 	}
 
+	// We couldn't, let's create a thread or queue or request
 	Internal* internal = new Internal(module, function, cb);
 
 	EnterCriticalSection(&_mutex);
@@ -44,6 +46,7 @@ void Loader::process_i()
 		_queue.erase(it);
 		LeaveCriticalSection(&_mutex);
 
+		// TODO: TIMEOUT, otherwise this could be an infinite loop
 		Data* data = new Data();
 		while (!data->Module)
 		{
