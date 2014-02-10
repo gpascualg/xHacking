@@ -202,6 +202,17 @@ public:
 
 #ifdef _64BITS_BUILD_
 	/// <summary>
+	/// Sets whether a call pool should be used or not (default: true)
+	/// </summary>
+	/// <param name="type">state, true for yes, false for not</param>
+	/// <returns>(Same) Detour object</returns>
+	Detour* WithPool(BYTE state)
+	{
+		_detourer->_withPool = state;
+		return this;
+	}
+
+	/// <summary>
 	/// Specifies the call pool type
 	/// </summary>
 	/// <param name="type">Type as stated in DETOUR_TYPE</param>

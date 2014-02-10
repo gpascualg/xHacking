@@ -49,6 +49,9 @@ BYTE Detour_i::FillByType(BYTE* src, BYTE* dst)
 BYTE* Detour_i::CreateCallPool()
 {
 	BYTE* pool = (BYTE*)_allocater->Get((DWORD_PTR)_src, PAGE_EXECUTE_READ, 12);
+	if (!pool)
+		return NULL;
+
 	*(BYTE*)(_src) = 0xE9;
 	*(DWORD*)(_src + 1) = (DWORD)(pool - _src) - 5;
 	return pool;
