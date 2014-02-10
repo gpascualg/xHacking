@@ -75,7 +75,7 @@ HANDLE Open(char* process)
 		access = PROCESS_QUERY_INFORMATION | PROCESS_VM_READ | PROCESS_VM_WRITE;
 	}
 
-	return OpenProcess(PROCESS_ALL_ACCESS, FALSE, pID);
+	return OpenProcess(access, FALSE, pID);
 }
 
 XHACKING_REMOTE_END_NS
