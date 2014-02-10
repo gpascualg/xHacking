@@ -20,6 +20,7 @@ BYTE Detour_i::MinLength()
 	switch (_type)
 	{
 		case DETOUR_JMP: return 5;
+		case DETOUR_JMP_EAX: return 7;
 		case DETOUR_RET: return 6;
 		case DETOUR_MEM: return 0;
 		default: return 0;
