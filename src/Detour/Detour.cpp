@@ -35,6 +35,12 @@ BYTE Detour_i::FillByType(BYTE* src, BYTE* dst)
 			*(DWORD*)(src + 1) = (DWORD)(dst - src) - 5;
 			break;
 
+		case DETOUR_JMP_EAX:
+			*(BYTE*)(src + 0) = 0xB8;
+			*(DWORD*)(src + 1) = (DWORD)(dst);
+			*(WORD*)(src + 5) = 0xE0FF;
+			break;
+
 		case DETOUR_RET:
 			*(BYTE*)(src + 0) = 0x68;
 			*(DWORD*)(src + 1) = (DWORD)(dst);
