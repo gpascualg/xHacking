@@ -8,7 +8,7 @@ BYTE Detour_i::MinLength()
 {
 	switch (_type)
 	{
-		case DETOUR_JMP: return 0;
+		case DETOUR_JMP: return 5;
 		case DETOUR_JMP_EAX: return 12;
 		case DETOUR_RET: return 0;
 		case DETOUR_MEM: return 0;
@@ -21,6 +21,8 @@ BYTE Detour_i::FillByType(BYTE* src, BYTE* dst)
 	switch (_type)
 	{
 		case DETOUR_JMP:
+			*(BYTE*)(src + 0) = 0xE9;
+			*(DWORD*)(src + 1) = (DWORD)(dst - src) - 5;
 			break;
 
 		// JMP RAX
@@ -42,6 +44,14 @@ BYTE Detour_i::FillByType(BYTE* src, BYTE* dst)
 	}
 
 	return MinLength();
+}
+
+BYTE* Detour_i::CreateCallPool()
+{
+	BYTE* pool = (BYTE*)_allocater->Get((DWORD_PTR)_src, PAGE_EXECUTE_READ, 12);
+	*(BYTE*)(_src) = 0xE9;
+	*(DWORD*)(_src + 1) = (DWORD)(pool - _src) - 5;
+	return pool;
 }
 
 BYTE* Detour_i::CreateTrampoline()

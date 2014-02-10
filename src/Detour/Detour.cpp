@@ -12,8 +12,17 @@ Detour_i::Detour_i(BYTE* src, BYTE* dst, BYTE arguments) :
 	_arguments(arguments),
 	_withTrampoline(false),
 	_detourlen(0),
-	_type(DETOUR_JMP)
+	_type(DETOUR_JMP),
+	_allocater(BlockAlloc::Instance())
+#ifdef _64BITS_BUILD_
+	, _withPool(true)
+#endif
 {}
+
+Detour_i::~Detour_i()
+{
+	_allocater.reset();
+}
 
 #ifndef _64BITS_BUILD_
 
@@ -60,7 +69,7 @@ BYTE Detour_i::FillByType(BYTE* src, BYTE* dst)
 BYTE* Detour_i::CreateTrampoline()
 {
 	BYTE retlen = MinLength();
-	BYTE* trampoline = (BYTE*)malloc(4 + (_arguments * 4) + 5 + 2 + _detourlen + retlen);
+	BYTE* trampoline = (BYTE*)_allocater->Get(NULL, PAGE_EXECUTE_READ, 4 + (_arguments * 4) + 5 + 2 + _detourlen + retlen);
 	if (!trampoline)
 		return false;
 
@@ -113,7 +122,7 @@ BYTE* Detour_i::CreateTrampoline()
 BYTE* Detour_i::CreateHook()
 {
 	BYTE retlen = MinLength();
-	BYTE* jump = (BYTE*)malloc(_detourlen + retlen);
+	BYTE* jump = (BYTE*)_allocater->Get(NULL, PAGE_EXECUTE_READ, _detourlen + retlen);
 	if (!jump)
 		return NULL;
 
@@ -162,6 +171,13 @@ bool Detour_i::Commit()
 		return true;
 	}
 
+#ifdef _64BITS_BUILD_
+	if (_withPool && !_detourlen)
+	{
+		_detourlen = 5;
+	}
+	else
+#endif
 	// ASM Detour
 	if (!_detourlen)
 		_detourlen = minLength;
@@ -173,21 +189,33 @@ bool Detour_i::Commit()
 
 	BYTE* hook = _withTrampoline ? CreateTrampoline() : CreateHook();
 	if (!hook)
-	{
-		NAMESPACE::SetLastError(DETOUR_MALLOC_ERROR);
 		return false;
-	}
 
 	DWORD old;
 	VirtualProtect(_src, _detourlen, PAGE_READWRITE, &old);
-
 	memset(_src, 0x90, _detourlen);
-	
+
 	BYTE* dst = _dst;
+	BYTE* src = _src;
 	if (_withTrampoline)
 		dst = hook;
 
-	FillByType(_src, dst);
+#ifdef _64BITS_BUILD_
+	if (_withPool)
+	{
+		BYTE* pool = CreateCallPool();
+		if (!pool)
+		{
+			NAMESPACE::SetLastError(DETOUR_VIRTUAL_ALLOC_ERROR);
+			VirtualProtect(_src, _detourlen, old, &old);
+			return false;
+		}
+
+		src = pool;
+	}
+#endif
+
+	FillByType(src, dst);
 
 	// Allows calling in non trampoline environments, and code restoring
 	_callee = hook;

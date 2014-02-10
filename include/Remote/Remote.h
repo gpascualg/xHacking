@@ -1,3 +1,24 @@
+// <liscence>Affero GPL</liscence>
+//
+// Copyright (c) 2013 All Right Reserved, http://youtube.com/user/bl1pi
+// This source is subject to the Affero GPL License.
+// Please see the LICENSE file for more information.
+// All other rights reserved.
+//
+// THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY 
+// KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+// IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A
+// PARTICULAR PURPOSE.
+//
+// </copyright>
+// <author>Guillem Pascual</author>
+// <email>blipi.tube@gmail.com</email>
+// <date>2014-02-05</date>
+// <summary>Contains the worker class of Detour</summary>
+
+#ifndef _XHACKING_REMOTE_H
+#define _XHACKING_REMOTE_H
+
 #include "xHacking.h"
 
 #define XHACKING_REMOTE_START_NS namespace Remote {
@@ -37,3 +58,5 @@ template<typename T> bool Write(HANDLE process, DWORD address, T value)
 
 XHACKING_REMOTE_END_NS
 XHACKING_END_NAMESPACE
+
+#endif

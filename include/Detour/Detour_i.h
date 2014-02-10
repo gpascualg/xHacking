@@ -19,51 +19,68 @@
 #ifndef _XHACKING_DETOUR_I_H
 #define _XHACKING_DETOUR_I_H
 
-#include "xHacking.h"
+#include <xHacking.h>
+#include <Memory/Memory.h>
+#include <memory>
 
 XHACKING_START_NAMESPACE
 
-	class Detour_i
+class Detour_i
+{
+	template<typename R, typename... A> friend class Detour;
+
+public:
+	BYTE* getSource()
 	{
-		template<typename R, typename... A> friend class Detour;
+		return _src;
+	}
 
-	public:
-		BYTE* getSource()
-		{
-			return _src;
-		}
+	BYTE* getDest()
+	{
+		return _dst;
+	}
 
-		BYTE* getDest()
-		{
-			return _dst;
-		}
+	BYTE getArguments()
+	{
+		return _arguments;
+	}
 
-		BYTE getArguments()
-		{
-			return _arguments;
-		}
+private:
+	Detour_i(BYTE* src, BYTE* dst, BYTE arguments);
+	~Detour_i();
 
-	private:
-		Detour_i(BYTE* src, BYTE* dst, BYTE arguments);
+	BYTE MinLength();
+	BYTE FillByType(BYTE* src, BYTE* dst);
 
-		BYTE MinLength();
-		BYTE FillByType(BYTE* src, BYTE* dst);
+#ifdef _64BITS_BUILD_
+	BYTE* CreateCallPool();
+#endif
 
-		BYTE* CreateTrampoline();
-		BYTE* CreateHook();
-		bool Commit();
-		bool Restore();
+	BYTE* CreateTrampoline();
+	BYTE* CreateHook();
+	bool Commit();
+	bool Restore();
 
-		bool _withTrampoline;
+private:
+	std::shared_ptr<BlockAlloc> _allocater;
 
-		BYTE* _src;
-		BYTE* _dst;
-		BYTE* _callee;
+	bool _withTrampoline;
 
-		BYTE _arguments;
-		BYTE _type;
-		BYTE _detourlen;
-	};
+	BYTE* _src;
+	BYTE* _dst;
+	BYTE* _callee;
+
+	BYTE _arguments;
+	BYTE _type;
+	BYTE _detourlen;
+
+#ifdef _64BITS_BUILD_
+	const BYTE PoolLength = 5;
+
+	bool _withPool;
+	BYTE _pooltype;
+#endif
+};
 	
 XHACKING_END_NAMESPACE
 

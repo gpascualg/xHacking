@@ -46,7 +46,6 @@
 #if defined(__x86_64__) || defined(__LP64__) || defined(_WIN64)
 //#error No support for 64 bits yet
 #define _64BITS_BUILD_
-
 #endif
 
 #endif
@@ -94,6 +93,7 @@ enum ERROR_CODES
 	ERROR_NONE						= 0x0000,
 	ERROR_CONSOLE_ALLOC				= 0x0001,
 	ERROR_NOT_IMPLEMENTED			= 0x0003,
+	ERROR_BUFFER_ALLOC				= 0x0004,
 
 	// LOADER
 	LOADER_WAIT_WITHOUT_CALLBACK	= 0x1001,
@@ -106,6 +106,7 @@ enum ERROR_CODES
 	DETOUR_LENGTH_ERROR				= 0x2003,
 	DETOUR_MALLOC_ERROR				= 0x2004,
 	DETOUR_RESTORE_VP_ERROR			= 0x2005,
+	DETOUR_VIRTUAL_ALLOC_ERROR		= 0x2006,
 
 	// API
 	API_NOT_READY					= 0x3001,

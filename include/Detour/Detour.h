@@ -66,6 +66,11 @@ public:
 		_detourer = new Detour_i(src, dst, count_arg<complex_type>::value);
 	}
 
+	~Detour()
+	{
+		delete _detourer;
+	}
+
 #ifdef _XHACKING_LOADER_H
 	/// <summary>
 	/// Creates a Loader which automatically waits for the DLL to get loaded.
@@ -194,6 +199,19 @@ public:
 	{
 		return _detourer->Restore();
 	}
+
+#ifdef _64BITS_BUILD_
+	/// <summary>
+	/// Specifies the call pool type
+	/// </summary>
+	/// <param name="type">Type as stated in DETOUR_TYPE</param>
+	/// <returns>(Same) Detour object</returns>
+	Detour* PoolType(BYTE type)
+	{
+		_detourer->_pooltype = type;
+		return this;
+	}
+#endif
 
 private:
 #ifdef _XHACKING_LOADER_H
