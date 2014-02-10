@@ -44,8 +44,9 @@
 
 // Check compiler bits mode
 #if defined(__x86_64__) || defined(__LP64__) || defined(_WIN64)
-#error No support for 64 bits yet
+//#error No support for 64 bits yet
 #define _64BITS_BUILD_
+
 #endif
 
 #endif
@@ -63,6 +64,10 @@
 
 #include <Psapi.h>
 #pragma comment(lib, "Psapi.lib")
+
+#ifdef _64BITS_BUILD_
+typedef UINT64 QWORD;
+#endif
 
 XHACKING_START_NAMESPACE
 
@@ -88,6 +93,7 @@ enum ERROR_CODES
 	// GENERAL
 	ERROR_NONE						= 0x0000,
 	ERROR_CONSOLE_ALLOC				= 0x0001,
+	ERROR_NOT_IMPLEMENTED			= 0x0003,
 
 	// LOADER
 	LOADER_WAIT_WITHOUT_CALLBACK	= 0x1001,

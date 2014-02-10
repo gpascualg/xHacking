@@ -15,6 +15,8 @@ Detour_i::Detour_i(BYTE* src, BYTE* dst, BYTE arguments) :
 	_type(DETOUR_JMP)
 {}
 
+#ifndef _64BITS_BUILD_
+
 BYTE Detour_i::MinLength()
 {
 	switch (_type)
@@ -22,7 +24,7 @@ BYTE Detour_i::MinLength()
 		case DETOUR_JMP: return 5;
 		case DETOUR_JMP_EAX: return 7;
 		case DETOUR_RET: return 6;
-		case DETOUR_MEM: return 0;
+		case DETOUR_MEM: return 1;
 		default: return 0;
 	}
 }
@@ -106,9 +108,12 @@ BYTE* Detour_i::CreateTrampoline()
 	return (trampoline - _detourlen - 2 - 5 - (_arguments * 4) - 4);
 }
 
+#endif
+
 BYTE* Detour_i::CreateHook()
 {
-	BYTE* jump = (BYTE*)malloc(_detourlen + 5);
+	BYTE retlen = MinLength();
+	BYTE* jump = (BYTE*)malloc(_detourlen + retlen);
 	if (!jump)
 		return NULL;
 
@@ -116,14 +121,20 @@ BYTE* Detour_i::CreateHook()
 	jump += _detourlen;
 
 	// jmp back
-	jump[0] = 0xE9;
-	*(DWORD*)(jump + 1) = (DWORD)(_src + _detourlen - (DWORD)jump) - 5;
+	FillByType(jump, _src + _detourlen);
 
 	return jump - _detourlen;
 }
 
 bool Detour_i::Commit()
 {
+	BYTE minLength = MinLength();
+	if (!minLength)
+	{
+		NAMESPACE::SetLastError(ERROR_NOT_IMPLEMENTED);
+		return false;
+	}
+
 	// MEM Detour!
 	if (_type == DETOUR_MEM)
 	{
@@ -153,8 +164,8 @@ bool Detour_i::Commit()
 
 	// ASM Detour
 	if (!_detourlen)
-		_detourlen = MinLength();
-	else if (_detourlen < MinLength())
+		_detourlen = minLength;
+	else if (_detourlen < minLength)
 	{
 		NAMESPACE::SetLastError(DETOUR_LENGTH_ERROR);
 		return false;
@@ -227,6 +238,8 @@ bool Detour_i::Restore()
 	return false;
 }
 
+#ifndef _64BITS_BUILD_
+
 LONG WINAPI EHandler(EXCEPTION_POINTERS* ExceptionInfo)
 {
 	if (ExceptionInfo->ExceptionRecord->ExceptionCode == STATUS_GUARD_PAGE_VIOLATION) {
@@ -289,5 +302,7 @@ LONG WINAPI EHandler(EXCEPTION_POINTERS* ExceptionInfo)
 
 	return EXCEPTION_CONTINUE_SEARCH;
 }
+
+#endif
 	
 XHACKING_END_NAMESPACE
