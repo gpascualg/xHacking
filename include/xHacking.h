@@ -24,11 +24,14 @@
 #error At least Visual Studio 2012 is required
 #endif
 
-#if (_MSC_VER < 1800) // < 2013
+#ifndef WARN
 #define STRINGISE_IMPL(x) #x
 #define STRINGISE(x) STRINGISE_IMPL(x)
 #define FILE_LINE_LINK __FILE__ "(" STRINGISE(__LINE__) ") : "
 #define WARN(exp) (FILE_LINE_LINK "WARNING: " exp)
+#endif
+
+#if (_MSC_VER < 1800) // < 2013
 #pragma message WARN("Visual Studio 2013 is recommended")
 #endif
 
