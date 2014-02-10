@@ -1,6 +1,6 @@
 // <liscence>Affero GPL</liscence>
 //
-// Copyright (c) 2013 All Right Reserved, http://youtube.com/user/bl1pi
+// Copyright (c) 2013-2014 All Right Reserved, http://youtube.com/user/bl1pi
 // This source is subject to the Affero GPL License.
 // Please see the LICENSE file for more information.
 // All other rights reserved.
@@ -14,6 +14,7 @@
 // <author>Guillem Pascual</author>
 // <email>blipi.tube@gmail.com</email>
 // <date>2014-02-05</date>
+// <credits>Tsuda Kageyu for the ¿base? code</credits>
 // <summary>Contains the worker class of Detour</summary>
 
 #ifndef _XHACKING_MEMORY_H

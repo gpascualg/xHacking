@@ -1,6 +1,6 @@
 // <liscence>Affero GPL</liscence>
 //
-// Copyright (c) 2013 All Right Reserved, http://youtube.com/user/bl1pi
+// Copyright (c) 2013-2014 All Right Reserved, http://youtube.com/user/bl1pi
 // This source is subject to the Affero GPL License.
 // Please see the LICENSE file for more information.
 // All other rights reserved.

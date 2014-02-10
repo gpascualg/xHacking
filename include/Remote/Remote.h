@@ -1,6 +1,6 @@
 // <liscence>Affero GPL</liscence>
 //
-// Copyright (c) 2013 All Right Reserved, http://youtube.com/user/bl1pi
+// Copyright (c) 2013-2014 All Right Reserved, http://youtube.com/user/bl1pi
 // This source is subject to the Affero GPL License.
 // Please see the LICENSE file for more information.
 // All other rights reserved.
@@ -14,12 +14,12 @@
 // <author>Guillem Pascual</author>
 // <email>blipi.tube@gmail.com</email>
 // <date>2014-02-05</date>
-// <summary>Contains the worker class of Detour</summary>
+// <summary>Contains the remote functions namespace</summary>
 
 #ifndef _XHACKING_REMOTE_H
 #define _XHACKING_REMOTE_H
 
-#include "xHacking.h"
+#include <xHacking.h>
 
 #define XHACKING_REMOTE_START_NS namespace Remote {
 #define XHACKING_REMOTE_END_NS }
