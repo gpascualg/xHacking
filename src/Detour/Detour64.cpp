@@ -9,7 +9,7 @@ BYTE Detour_i::MinLength()
 	switch (_type)
 	{
 		case DETOUR_JMP: return 0;
-		case DETOUR_JMP_EAX: return 7;
+		case DETOUR_JMP_EAX: return 12;
 		case DETOUR_RET: return 0;
 		case DETOUR_MEM: return 0;
 		default: return 0;
@@ -27,12 +27,11 @@ BYTE Detour_i::FillByType(BYTE* src, BYTE* dst)
 		case DETOUR_JMP_EAX:
 			// MOV RAX 64 bits
 			*(BYTE*)(src + 0) = 0x48;
-			*(BYTE*)(src + 1) = 0xc7;
-			*(BYTE*)(src + 2) = 0xc0;
-			*(QWORD*)(src + 3) = (QWORD)(dst);
+			*(BYTE*)(src + 1) = 0xB8;
+			*(QWORD*)(src + 2) = (QWORD)(dst);
 
 			// JMP RAX
-			*(WORD*)(src + 11) = 0xE0FF;
+			*(WORD*)(src + 10) = 0xE0FF;
 			break;
 
 		case DETOUR_RET:
@@ -48,6 +47,11 @@ BYTE Detour_i::FillByType(BYTE* src, BYTE* dst)
 BYTE* Detour_i::CreateTrampoline()
 {
 	return NULL;
+}
+
+LONG WINAPI EHandler(EXCEPTION_POINTERS* ExceptionInfo)
+{
+	return EXCEPTION_CONTINUE_SEARCH;
 }
 
 #endif
