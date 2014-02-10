@@ -46,7 +46,7 @@
 #pragma warning (disable: 4731)
 
 // Check compiler bits mode
-#if defined(__x86_64__) || defined(__LP64__) || defined(_WIN64)
+#if (defined(__x86_64__) || defined(__LP64__) || defined(_WIN64)) && !defined(_64BITS_BUILD_)
 #pragma message WARN("Not all functions may be available on x64 yet")
 #define _64BITS_BUILD_
 #endif
