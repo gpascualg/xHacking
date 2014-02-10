@@ -72,12 +72,12 @@ BlockAlloc::MEMORY_BLOCK* BlockAlloc::Alloc(DWORD_PTR from, DWORD protect, size_
 	if (from)
 	{
 		// +- 500mb
-		_start = from - 0x20000000;
-		_end = from + 0x20000000;
+		start = from - 0x20000000;
+		end = from + 0x20000000;
 	}
 
-	ib = std::lower_bound(ib, ie, from);
-	ie = std::upper_bound(ib, ie, from);
+	ib = std::lower_bound(ib, ie, start);
+	ie = std::upper_bound(ib, ie, end);
 #endif
 	
 	// Let's search for a free block
@@ -96,8 +96,8 @@ BlockAlloc::MEMORY_BLOCK* BlockAlloc::Alloc(DWORD_PTR from, DWORD protect, size_
 
 	if (from)
 	{
-		DWORD_PTR min = _start / BlockSize;
-		DWORD_PTR max = _end / BlockSize;
+		DWORD_PTR min = start / BlockSize;
+		DWORD_PTR max = end / BlockSize;
 		int rel = 0;
 		MEMORY_BASIC_INFORMATION mi = { 0 };
 		for (int i = 0; i < (max - min + 1); ++i)
