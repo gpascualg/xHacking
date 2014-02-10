@@ -10,7 +10,7 @@ bool GrantPrivileges();
 DWORD FindProcessId(const std::string& processName);
 HANDLE Open(char* process);
 
-template<typename T> Read(HANDLE process, DWORD address)
+template<typename T> T Read(HANDLE process, DWORD address)
 {
 	T value = 0;
 	size_t read = 0;
