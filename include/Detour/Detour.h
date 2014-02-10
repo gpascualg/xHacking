@@ -20,7 +20,7 @@
 #define _XHACKING_DETOUR_H
 
 #include <xHacking.h>
-#include <Detour_i.h>
+#include <Detour/Detour_i.h>
 
 XHACKING_START_NAMESPACE
 
