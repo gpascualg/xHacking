@@ -23,6 +23,8 @@
 
 #include <vector>
 #include <algorithm>
+#include <Psapi.h>
+#pragma comment(lib, "Psapi.lib")
 
 XHACKING_START_NAMESPACE
 

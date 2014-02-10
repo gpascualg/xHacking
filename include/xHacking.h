@@ -64,9 +64,6 @@
 #include <functional>
 #include <typeinfo>
 
-#include <Psapi.h>
-#pragma comment(lib, "Psapi.lib")
-
 #ifdef _64BITS_BUILD_
 typedef UINT64 QWORD;
 #endif
