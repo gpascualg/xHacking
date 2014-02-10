@@ -44,7 +44,7 @@
 
 // Check compiler bits mode
 #if defined(__x86_64__) || defined(__LP64__) || defined(_WIN64)
-//#error No support for 64 bits yet
+#pragma message WARN("Not all functions may be available on x64 yet")
 #define _64BITS_BUILD_
 #endif
 
