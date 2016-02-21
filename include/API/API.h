@@ -125,7 +125,7 @@ public:
 			DWORD to = (DWORD)jmp;
 
 			// foreach args...: push args[i]
-			push_arg(jmp, nargs);
+			push_arg(jmp, targs);
 
 			// PUSH Custom Return
 			*(BYTE*)(jmp + 0) = 0x68;
