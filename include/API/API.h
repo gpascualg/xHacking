@@ -36,6 +36,28 @@ enum API_LOADER_MODE
 	API_LOADER_LOAD,
 };
 
+template<typename... Tp>
+struct sizeof_pack___ { static const std::size_t value = sizeof...(Tp); };
+
+template<std::size_t I = 0, typename... Tp>
+typename std::enable_if<I == sizeof_pack___<Tp...>::value, BYTE*>::type
+	push_arg(BYTE* jmp, std::tuple<Tp...> tpl)
+{
+	return jmp;
+}
+
+template<std::size_t I = 0, typename... Tp>
+typename std::enable_if<I < sizeof_pack___<Tp...>::value, BYTE*>::type
+	push_arg(BYTE* jmp, std::tuple<Tp...> tpl)
+{
+	*(BYTE*)(jmp + 0) = 0x68;
+	*(DWORD*)(jmp + 1) = std::get<I>(tpl);
+	jmp += 5;
+
+	return push_arg<I + 1, Tp...>(jmp, tpl);
+}
+
+
 template<typename ReturnType, typename... Args>
 class API
 {
@@ -103,14 +125,7 @@ public:
 			DWORD to = (DWORD)jmp;
 
 			// foreach args...: push args[i]
-			for (int i = 0; i < nargs; i++)
-			{
-				// PUSH [argument<i>]
-				*(BYTE*)(jmp + 0) = 0x68;
-				*(DWORD*)(jmp + 1) = std::get<0>(targs);
-
-				jmp += 5;
-			}
+			push_arg(jmp, nargs);
 
 			// PUSH Custom Return
 			*(BYTE*)(jmp + 0) = 0x68;
