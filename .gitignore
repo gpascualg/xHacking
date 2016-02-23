@@ -1,0 +1,6 @@
+[Dd]ebug/
+[Rr]elease/
+x64/
+*.sdf
+*.opensdf
+.vs/
