@@ -165,11 +165,16 @@ bool CreateConsole()
 		int consoleHandleW = _open_osfhandle(stdioHandle, _O_TEXT);
 		fptr = _fdopen(consoleHandleW, "w");
 		*stdout = *fptr;
-		setvbuf(stdout, NULL, _IONBF, 0);
+		setvbuf(stdout, NULL, _IONBF, 1);
 
 		stdioHandle = (long)GetStdHandle(STD_ERROR_HANDLE);
 		*stderr = *fptr;
 		setvbuf(stderr, NULL, _IONBF, 0);
+
+		// Compatibility for older implementations
+		freopen("CONIN$", "r", stdin);
+		freopen("CONOUT$", "w", stdout);
+		freopen("CONOUT$", "w", stderr);
 
 		return true;
 	}
