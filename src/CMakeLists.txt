@@ -6,7 +6,7 @@ file(GLOB_RECURSE sources_Remote    Remote/*.cpp        ${PROJECT_SOURCE_DIR}/in
 file(GLOB_RECURSE sources_Utilities Utilities/*.cpp     ${PROJECT_SOURCE_DIR}/include/xhacking/Utilities/*.h)
 
 set(xHacking_SOURCES
-    ${PROJECT_SOURCE_DIR}/include/xHacking.h ${PROJECT_SOURCE_DIR}/src/xHacking.cpp
+    ${PROJECT_SOURCE_DIR}/include/xhacking/xHacking.h ${PROJECT_SOURCE_DIR}/src/xHacking.cpp
     ${sources_API}
     ${sources_Detour}
     ${sources_Loader}
