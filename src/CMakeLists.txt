@@ -1,9 +1,9 @@
-file(GLOB_RECURSE sources_API                           ${PROJECT_SOURCE_DIR}/include/API/*.h)
-file(GLOB_RECURSE sources_Detour    Detour/*.cpp        ${PROJECT_SOURCE_DIR}/include/Detour/*.h)
-file(GLOB_RECURSE sources_Loader    Loader/*.cpp        ${PROJECT_SOURCE_DIR}/include/Loader/*.h)
-file(GLOB_RECURSE sources_Memory    Memory/*.cpp        ${PROJECT_SOURCE_DIR}/include/Memory/*.h)
-file(GLOB_RECURSE sources_Remote    Remote/*.cpp        ${PROJECT_SOURCE_DIR}/include/Remote/*.h)
-file(GLOB_RECURSE sources_Utilities Utilities/*.cpp     ${PROJECT_SOURCE_DIR}/include/Utilities/*.h)
+file(GLOB_RECURSE sources_API                           ${PROJECT_SOURCE_DIR}/include/xhacking/API/*.h)
+file(GLOB_RECURSE sources_Detour    Detour/*.cpp        ${PROJECT_SOURCE_DIR}/include/xhacking/Detour/*.h)
+file(GLOB_RECURSE sources_Loader    Loader/*.cpp        ${PROJECT_SOURCE_DIR}/include/xhacking/Loader/*.h)
+file(GLOB_RECURSE sources_Memory    Memory/*.cpp        ${PROJECT_SOURCE_DIR}/include/xhacking/Memory/*.h)
+file(GLOB_RECURSE sources_Remote    Remote/*.cpp        ${PROJECT_SOURCE_DIR}/include/xhacking/Remote/*.h)
+file(GLOB_RECURSE sources_Utilities Utilities/*.cpp     ${PROJECT_SOURCE_DIR}/include/xhacking/Utilities/*.h)
 
 set(xHacking_SOURCES
     ${PROJECT_SOURCE_DIR}/include/xHacking.h ${PROJECT_SOURCE_DIR}/src/xHacking.cpp
