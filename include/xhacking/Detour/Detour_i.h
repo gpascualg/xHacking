@@ -5,7 +5,7 @@
 // Please see the LICENSE file for more information.
 // All other rights reserved.
 //
-// THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY 
+// THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY
 // KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
 // IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A
 // PARTICULAR PURPOSE.
@@ -19,8 +19,8 @@
 #ifndef _XHACKING_DETOUR_I_H
 #define _XHACKING_DETOUR_I_H
 
-#include <xHacking.h>
-#include <Memory/Memory.h>
+#include <xhacking/xHacking.h>
+#include <xhacking/Memory/Memory.h>
 #include <memory>
 
 XHACKING_START_NAMESPACE
@@ -81,7 +81,7 @@ private:
 	BYTE _pooltype;
 #endif
 };
-	
+
 XHACKING_END_NAMESPACE
 
 #endif

@@ -5,7 +5,7 @@
 // Please see the LICENSE file for more information.
 // All other rights reserved.
 //
-// THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY 
+// THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY
 // KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
 // IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A
 // PARTICULAR PURPOSE.
@@ -19,8 +19,8 @@
 #ifndef _XHACKING_DETOUR_H
 #define _XHACKING_DETOUR_H
 
-#include <xHacking.h>
-#include <Detour/Detour_i.h>
+#include <xhacking/xHacking.h>
+#include <xhacking/Detour/Detour_i.h>
 
 XHACKING_START_NAMESPACE
 
@@ -96,7 +96,7 @@ public:
 	void Load(char* module, char* function, BYTE* dst)
 	{
 		_detourer->_dst = dst;
-		
+
 		Loader::Data* data =  Loader::Load(module, function);
 		if (data)
 		{

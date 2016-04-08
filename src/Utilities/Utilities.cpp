@@ -1,4 +1,4 @@
-#include <Utilities/Utilities.h>
+#include <xhacking/Utilities/Utilities.h>
 
 // Console
 #include <io.h>
@@ -39,7 +39,7 @@ typedef struct _UNLINKED_MODULE
     PLIST_ENTRY RealInLoadOrderLinks;
     PLIST_ENTRY RealInMemoryOrderLinks;
     PLIST_ENTRY RealInInitializationOrderLinks;
-    PLDR_DATA_TABLE_ENTRY Entry; 
+    PLDR_DATA_TABLE_ENTRY Entry;
 } UNLINKED_MODULE;
 
 #define UNLINK(x)               \

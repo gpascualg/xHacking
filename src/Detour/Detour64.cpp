@@ -1,4 +1,4 @@
-#include <Detour/Detour.h>
+#include <xhacking/Detour/Detour.h>
 
 XHACKING_START_NAMESPACE
 

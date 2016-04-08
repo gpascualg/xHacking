@@ -3,10 +3,10 @@
 
 // INCLUDE ORDER IS, **IS**, IMPORTANT!
 // If not done in this order, functions such as API::AutoLoad (depens on Loader) would not be available
-#include "xHacking.h"
-#include "Utilities/Utilities.h"
-#include "Loader/Loader.h"
-#include "API/api.h"
+#include <xhacking/xHacking.h>
+#include <xhacking/Utilities/Utilities.h>
+#include <xhacking/Loader/Loader.h>
+#include <xhacking/API/api.h>
 #pragma comment(lib, "xHacking.lib")
 using namespace xHacking;
 

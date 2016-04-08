@@ -5,10 +5,10 @@
 // xHacking library
 // INCLUDE ORDER IS, **IS**, IMPORTANT!
 // If not done in this order, functions such as Detour::Wait (depens on Loader) would not be available
-#include "xHacking.h"
-#include "Utilities/Utilities.h"
-#include "Loader/Loader.h"
-#include "Detour/Detour.h"
+#include <xhacking/xHacking.h>
+#include <xhacking/Utilities/Utilities.h>
+#include <xhacking/Loader/Loader.h>
+#include <xhacking/Detour/Detour.h>
 using namespace xHacking;
 
 #ifdef _DEBUG
@@ -31,7 +31,7 @@ int WINAPI nuestro_recv(SOCKET s, char *buf, int len, int flags)
 
 	__asm PUSHAD;
 	__asm PUSHFD;
-	
+
 	// Custom code
 
 	__asm POPFD;
@@ -61,7 +61,7 @@ int WINAPI nuestro_mem_send(int s, char* buf, int l, int f)
 {
 	__asm PUSHAD;
 	__asm PUSHFD;
-	
+
 	__asm POPFD;
 	__asm POPAD;
 
@@ -92,7 +92,7 @@ void Hooks()
 	// We want it to be automatically created whenever WSOCK32 is loaded (and not load it),
 	// Thus, we use the `Wait` function in Detour.
 	// If we wanted to force load the DLL, we could use `Load`
-	
+
 	// int WINAPI recv(int, char*, int, int);
 	recvDetour = new Detour<int, int, char*, int, int>();
 	recvDetour->Wait("WSOCK32.dll", "recv", (BYTE*)nuestro_recv);
@@ -100,7 +100,7 @@ void Hooks()
 	// We could specify the Detour type by calling `Type(DETOUR_X)` where DETOUR_X is defined in
 	// DETOUR_TYPE. That call should be done BEFORE the wait call, unexpected behaviour may happen
 	// otherwise
-		
+
 	// Here we use the Loader class to wait for the WS2_32 dll
 	// Once it is loaded, the function `hookSend` will be called
 	Loader::Wait("WS2_32.dll", "send", hookSend);

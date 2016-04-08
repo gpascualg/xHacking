@@ -5,7 +5,7 @@
 // Please see the LICENSE file for more information.
 // All other rights reserved.
 //
-// THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY 
+// THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY
 // KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
 // IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A
 // PARTICULAR PURPOSE.
@@ -19,7 +19,7 @@
 #ifndef _XHACKING_API_H
 #define _XHACKING_API_H
 
-#include <xHacking.h>
+#include <xhacking/xHacking.h>
 
 XHACKING_START_NAMESPACE
 
@@ -89,7 +89,7 @@ public:
 		_fake(NULL)
 	{
 	}
-	
+
 	/// <summary>
 	/// Calls the hidden API, faking the return address if it has been setup
 	/// </summary>
@@ -158,7 +158,7 @@ public:
 
 	/**
 	If we were to see the stack of the above function, it would be like:
-		
+
 		CALL_RETURN	<---------------
 		arg[0]						|
 		arg[1]						|
@@ -169,7 +169,7 @@ public:
 		(JMP API)					|
 			| ...					|
 			| RET ------------------
-	
+
 	**/
 
 	/// <summary>
@@ -207,7 +207,7 @@ public:
 		_fake = (DWORD)NAMESPACE::FindPattern(start, len, (BYTE*)"\xC3", "x");
 		if (!_fake)
 			NAMESPACE::SetLastError(API_AUTOFAKE_NOT_FOUND);
-		
+
 		return this;
 	}
 
@@ -287,7 +287,7 @@ private:
 	{
 		if (NAMESPACE::GetLastError() == LOADER_TIMEOUT)
 			return;
-		
+
 		api->_api = data->Function;
 		api->_jmp = (DWORD)data->Function;
 		api->_state = API_READY;

@@ -5,7 +5,7 @@
 // Please see the LICENSE file for more information.
 // All other rights reserved.
 //
-// THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY 
+// THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY
 // KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
 // IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A
 // PARTICULAR PURPOSE.
@@ -14,13 +14,13 @@
 // <author>Guillem Pascual</author>
 // <email>blipi.tube@gmail.com</email>
 // <date>2014-02-05</date>
-// <credits>Tsuda Kageyu for the ¿base? code</credits>
+// <credits>Tsuda Kageyu for the ï¿½base? code</credits>
 // <summary>Contains the worker class of Detour</summary>
 
 #ifndef _XHACKING_MEMORY_H
 #define _XHACKING_MEMORY_H
 
-#include <xHacking.h>
+#include <xhacking/xHacking.h>
 #include <iostream>
 #include <vector>
 #include <algorithm>

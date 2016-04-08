@@ -1,4 +1,4 @@
-#include <Memory/Memory.h>
+#include <xhacking/Memory/Memory.h>
 
 XHACKING_START_NAMESPACE
 
@@ -79,7 +79,7 @@ BlockAlloc::MEMORY_BLOCK* BlockAlloc::Alloc(DWORD_PTR from, DWORD protect, size_
 	ib = std::lower_bound(ib, ie, start);
 	ie = std::upper_bound(ib, ie, end);
 #endif
-	
+
 	// Let's search for a free block
 	for (MEMORY_ITERATOR i = ib; i != ie; ++i)
 	{
@@ -91,7 +91,7 @@ BlockAlloc::MEMORY_BLOCK* BlockAlloc::Alloc(DWORD_PTR from, DWORD protect, size_
 
 	// Not found, must allocate some memory
 	DWORD_PTR alloc = NULL;
-		
+
 #ifdef _64BITS_BUILD_
 
 	if (from)

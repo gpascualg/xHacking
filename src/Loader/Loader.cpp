@@ -1,4 +1,4 @@
-#include <Loader/Loader.h>
+#include <xhacking/Loader/Loader.h>
 
 XHACKING_START_NAMESPACE
 
@@ -54,7 +54,7 @@ void Loader::process_i()
 			Sleep(500);
 		}
 		data->Function = (BYTE*)GetProcAddress(data->Module, internal->Function);
-		
+
 		internal->Cb(data);
 		delete internal;
 		delete data;

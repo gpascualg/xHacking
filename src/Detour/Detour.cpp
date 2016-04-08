@@ -1,4 +1,4 @@
-#include <Detour/Detour.h>
+#include <xhacking/Detour/Detour.h>
 
 XHACKING_START_NAMESPACE
 
@@ -281,7 +281,7 @@ LONG WINAPI EHandler(EXCEPTION_POINTERS* ExceptionInfo)
 				// We are going to force a call to our "detour" function
 				// That is, saving EBP (avoid messing up), pushing parameters, and calling
 
-				// Inline asm requieres DWORDS for calls/movs 
+				// Inline asm requieres DWORDS for calls/movs
 				DWORD offs = detour->getArguments() * 4 + 4;
 				DWORD dest = (DWORD)detour->getDest();
 				DWORD oEBP = 0;
@@ -332,5 +332,5 @@ LONG WINAPI EHandler(EXCEPTION_POINTERS* ExceptionInfo)
 }
 
 #endif
-	
+
 XHACKING_END_NAMESPACE
