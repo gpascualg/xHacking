@@ -239,7 +239,7 @@ public:
 			Loader::Data* data = Loader::Load(module, "");
 			if (data)
 			{
-				api->AutoFakeWithinModule(data->Module);
+				AutoFakeWithinModule(data->Module);
 				delete data;
 			}
 		}
