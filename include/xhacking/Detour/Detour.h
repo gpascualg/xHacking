@@ -109,15 +109,6 @@ public:
 #endif
 
 	/// <summary>
-	/// Returns the original (WINAPI!) function
-	/// </summary>
-	/// <returns>The original function, ready to call</returns>
-	__forceinline raw_type WINAPI operator()()
-	{
-		return (raw_type)(_detourer->_callee);
-	}
-
-	/// <summary>
 	/// Calls the original (WINAPI!) function given a tuple of arguments
 	/// </summary>
 	/// <param name="Args...">Tuple of arguments to be passed to the function</param>
