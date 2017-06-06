@@ -101,6 +101,7 @@ BYTE* Detour_i::CreateTrampoline()
 	trampoline += 5;
 
 	// POPAD
+	// POP EBP
 	*(BYTE*)(trampoline + 0) = 0x61;
 	*(BYTE*)(trampoline + 1) = 0x5D;
 	trampoline += 2;
