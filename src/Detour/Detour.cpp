@@ -75,11 +75,10 @@ BYTE* Detour_i::CreateTrampoline()
 
 	// PUSH EBP
 	// MOV EBP, ESP
-	// PUSH EAX
-	// FIXME: Is it really worth saving EAX?
+	// PUSHAD
 	*(BYTE*)(trampoline + 0) = 0x55;
 	*(WORD*)(trampoline + 1) = 0xEC8B;
-	*(BYTE*)(trampoline + 3) = 0x50;
+	*(BYTE*)(trampoline + 3) = 0x60;
 	trampoline += 4;
 
 	BYTE offset = _arguments * 4 + 4; // +3 (mov eax, []) + 1 (push eax) = +4
@@ -101,9 +100,8 @@ BYTE* Detour_i::CreateTrampoline()
 	*(DWORD*)(trampoline + 1) = (DWORD)(_dst - trampoline) - 5;
 	trampoline += 5;
 
-	// POP EAX
-	// POP EBP
-	*(BYTE*)(trampoline + 0) = 0x58;
+	// POPAD
+	*(BYTE*)(trampoline + 0) = 0x61;
 	*(BYTE*)(trampoline + 1) = 0x5D;
 	trampoline += 2;
 
